@@ -31,13 +31,17 @@ Requisito: Docker Desktop.
 docker compose up -d --build
 ```
 
+Eso levanta SQL Server, crea el esquema ejecutando `BaseDatos.sql` y arranca las dos
+APIs. No hay que ejecutar nada a mano. El script es idempotente, así que se puede
+volver a levantar cuantas veces se quiera sin perder datos ni provocar errores.
+
 | Servicio | URL |
 |---|---|
 | Customers API | http://localhost:5001 |
 | Accounts API | http://localhost:5002 |
 | Health check | `/status` en cada API |
 | Swagger UI | `/swagger` en cada API |
-| SQL Server | `localhost:1433` (usuario `sa`) |
+| SQL Server | `localhost:1433` |
 
 Para bajar todo:
 
@@ -45,6 +49,57 @@ Para bajar todo:
 docker compose down          # conserva los datos
 docker compose down -v       # borra también la base de datos
 ```
+
+## Conexión a la base de datos
+
+SQL Server queda expuesto en el puerto 1433 del host. Se puede conectar con SSMS,
+Azure Data Studio, DBeaver o cualquier cliente.
+
+| Parámetro | Valor |
+|---|---|
+| Host | `localhost` |
+| Puerto | `1433` |
+| Usuario | `sa` |
+| Contraseña | `DevSu*Bank2026` |
+| Bases de datos | `DevSuBankCustomers`, `DevSuBankAccounts` |
+
+Cadena de conexión:
+
+```
+Server=localhost,1433;Database=DevSuBankCustomers;User Id=sa;Password=DevSu*Bank2026;TrustServerCertificate=True;
+```
+
+También se puede consultar desde el contenedor:
+
+```bash
+docker exec -it devsubank-sqlserver /opt/mssql-tools18/bin/sqlcmd   -C -S localhost -U sa -P 'DevSu*Bank2026' -d DevSuBankCustomers
+```
+
+Desde adentro de la red de Docker el host no es `localhost` sino `sqlserver`, que es el
+nombre del servicio. Por eso las APIs se conectan con `Host=sqlserver`.
+
+Estas credenciales son solo para el entorno local. En un despliegue real irían en un
+gestor de secretos.
+
+## Rutas de la API
+
+Las rutas están versionadas:
+
+```
+POST /api/v1/clientes
+```
+
+El enunciado pide que el endpoint se llame `/clientes`, y ese nombre se respeta: el
+recurso es `clientes`, no `clients`. Lo que se agregó alrededor es el prefijo `/api`
+—que aparece en la propia instrucción de Postman del enunciado— y el segmento de
+versión.
+
+Versionar desde el primer día es barato; hacerlo después no. Una vez que hay clientes
+consumiendo la API, cambiar un contrato sin versión rompe a todo el mundo a la vez. Con
+`v1` en la ruta, una `v2` puede convivir con la anterior mientras los consumidores
+migran a su ritmo.
+
+La colección de Postman apunta a las rutas versionadas.
 
 ## Sobre el idioma del código
 
@@ -66,7 +121,7 @@ le parezca mejor en inglés.
 La solución fue dejar la frontera bien marcada. Todo lo que está adentro (entidades,
 servicios, repositorios, variables, pruebas, tablas de base de datos) está en inglés.
 Lo que sale hacia afuera se traduce en un único lugar: los DTOs de la capa de
-presentación, usando `[JsonPropertyName]`. Así el dominio nunca contiene texto en
+aplicación, usando `[JsonPropertyName]`. Así el dominio nunca contiene texto en
 español y la traducción es explícita y fácil de encontrar.
 
 Dicho eso: **lo ideal sería que los contratos también estuvieran en inglés**. Si esto

@@ -113,5 +113,32 @@ namespace DevSu.Bank.Customers.Domain.Resources {
                 return ResourceManager.GetString("UnkownError", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a The value of '{0}' is already registered.
+        /// </summary>
+        public static string ValueAlreadyRegistered {
+            get {
+                return ResourceManager.GetString("ValueAlreadyRegistered", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a The value of '{0}' is not valid.
+        /// </summary>
+        public static string InvalidValueForParameter {
+            get {
+                return ResourceManager.GetString("InvalidValueForParameter", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a Client not found.
+        /// </summary>
+        public static string ClientNotFound {
+            get {
+                return ResourceManager.GetString("ClientNotFound", resourceCulture);
+            }
+        }
     }
 }
