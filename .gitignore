@@ -55,3 +55,8 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Material de la prueba tecnica: uso interno, no se publica
+REQUERIMIENTOS.md
+*.html
+IDE CoderPad Screen_files/
