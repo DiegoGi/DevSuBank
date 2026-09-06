@@ -34,8 +34,9 @@ docker compose up -d --build
 | Servicio | URL |
 |---|---|
 | Customers API | http://localhost:5001 |
-| Health check | http://localhost:5001/status |
-| Swagger UI | http://localhost:5001/swagger |
+| Accounts API | http://localhost:5002 |
+| Health check | `/status` en cada API |
+| Swagger UI | `/swagger` en cada API |
 | SQL Server | `localhost:1433` (usuario `sa`) |
 
 Para bajar todo:
@@ -77,3 +78,4 @@ La documentación (este README y los demás) está en español por practicidad.
 ## Documentación por microservicio
 
 - [src/customers](src/customers/README.md) — arquitectura, capas y reglas de dependencia.
+- [src/accounts](src/accounts/README.md) — misma arquitectura, aplicada a cuentas y movimientos.

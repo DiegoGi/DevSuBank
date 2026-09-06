@@ -35,5 +35,23 @@ services:
       sqlserver:
         condition: service_healthy
 
+  accounts-api:
+    build:
+      context: ./src/accounts
+      dockerfile: DevSu.Bank.Accounts.Presentation.Api/Dockerfile
+    container_name: devsubank-accounts-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:8080"
+      Host: "sqlserver"
+      Database: "DevSuBankAccounts"
+      User: "sa"
+      Password: "DevSu*Bank2026"
+    ports:
+      - "5002:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
 volumes:
   sqlserver-data:
