@@ -1,20 +1,28 @@
 ﻿{
-   "CodeGenerationMode": 4,
+   "CodeGenerationMode": 6,
    "ContextClassName": "ReadOnlyContext",
    "ContextNamespace": "Infrastructure.ReadOnlyDataContext",
    "FilterSchemas": false,
    "IncludeConnectionString": false,
+   "IrregularWords": null,
+   "MinimumProductVersion": "2.6.1604",
    "ModelNamespace": "Application.ReadOnlyModels",
    "OutputContextPath": "ReadOnlyDataContext",
    "OutputPath": "..\\DevSu.Bank.Customers.Application\\ReadOnlyModels",
+   "PluralRules": null,
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "DevSu.Bank.Customers",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 3,
    "SelectedToBeGenerated": 0,
+   "SingularRules": null,
    "T4TemplatePath": null,
-    "Tables": [
-    ],
+   "Tables": [
+      {
+         "Name": "[dbo].[Clients]",
+         "ObjectType": 0
+      }
+   ],
    "UiHint": null,
    "UncountableWords": null,
    "UseAsyncStoredProcedureCalls": true,
@@ -28,17 +36,19 @@
    "UseHandleBars": false,
    "UseHierarchyId": false,
    "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
    "UseLegacyPluralizer": true,
    "UseManyToManyEntity": false,
    "UseNoDefaultConstructor": false,
    "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
-   "UseNullableReferences": false,
+   "UseNullableReferences": true,
    "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": false,
    "UseSchemaNamespaces": false,
    "UseSpatial": false,
    "UseT4": true,
-   "UseT4Split": false
+   "UseT4Split": false,
+   "UseTypedTvpParameters": true
 }

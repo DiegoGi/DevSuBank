@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\V2\**" />
+    <Content Remove="Controllers\V2\**" />
+    <EmbeddedResource Remove="Controllers\V2\**" />
+    <None Remove="Controllers\V2\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
     <PackageReference Include="Microsoft.OpenApi" Version="2.7.5" />
@@ -21,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\V2\" />
+    <Folder Include="Controllers\V1\" />
   </ItemGroup>
 
 </Project>

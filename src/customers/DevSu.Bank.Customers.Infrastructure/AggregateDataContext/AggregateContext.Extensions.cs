@@ -16,6 +16,8 @@ namespace DevSu.Bank.Customers.Infrastructure.AggregateDataContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new Configurations.ClientConfiguration());
+
             OnModelCreatingPartial(modelBuilder);
         }
 

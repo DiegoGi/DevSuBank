@@ -17,6 +17,27 @@ services:
       retries: 12
       start_period: 30s
 
+  db-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: devsubank-db-init
+    restart: "no"
+    volumes:
+      - ./BaseDatos.sql:/scripts/BaseDatos.sql:ro
+    entrypoint:
+      - /opt/mssql-tools18/bin/sqlcmd
+      - -C
+      - -S
+      - sqlserver
+      - -U
+      - sa
+      - -P
+      - DevSu*Bank2026
+      - -i
+      - /scripts/BaseDatos.sql
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
   customers-api:
     build:
       context: ./src/customers
@@ -32,8 +53,8 @@ services:
     ports:
       - "5001:8080"
     depends_on:
-      sqlserver:
-        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
 
   accounts-api:
     build:
@@ -50,8 +71,8 @@ services:
     ports:
       - "5002:8080"
     depends_on:
-      sqlserver:
-        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
 
 volumes:
   sqlserver-data:

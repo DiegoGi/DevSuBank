@@ -1,7 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using DevSu.Bank.Customers.Domain.AggregateModels.ClientAggregate;
 using DevSu.Bank.Customers.Infrastructure.AggregateDataContext;
+using DevSu.Bank.Customers.Application.ReadOnlyRepositories;
+using DevSu.Bank.Customers.Application.Services.Infrastructure;
+using DevSu.Bank.Customers.Infrastructure.AggregateRepositories;
+using DevSu.Bank.Customers.Infrastructure.ReadOnlyRepositories;
+using DevSu.Bank.Customers.Infrastructure.Services;
 using DevSu.Bank.Customers.Infrastructure.ReadOnlyDataContext;
 
 namespace DevSu.Bank.Customers.Infrastructure.Extensions
@@ -42,16 +48,22 @@ namespace DevSu.Bank.Customers.Infrastructure.Extensions
 
         private static IServiceCollection AddAggregateRepositories(this IServiceCollection services)
         {
+            services.AddScoped<IClientRepository, ClientRepository>();
+
             return services;
         }
 
         private static IServiceCollection AddReadOnlyRepositories(this IServiceCollection services)
         {
+            services.AddScoped<IClientReadOnlyRepository, ClientReadOnlyRepository>();
+
             return services;
         }
 
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddSingleton<IPasswordHasherService, PasswordHasherService>();
+
             return services;
         }
     }
