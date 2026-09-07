@@ -1,7 +1,7 @@
-﻿using System.Linq.Expressions;
-using DevSu.Bank.Accounts.Domain.SeedWork;
+﻿using DevSu.Bank.Accounts.Domain.SeedWork;
 using DevSu.Bank.Accounts.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace DevSu.Bank.Accounts.Infrastructure.SeedWork;
 

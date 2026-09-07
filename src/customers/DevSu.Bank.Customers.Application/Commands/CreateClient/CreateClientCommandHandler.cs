@@ -1,9 +1,9 @@
-using System.Linq.Expressions;
 using DevSu.Bank.Customers.Application.SeedWork;
 using DevSu.Bank.Customers.Application.Services.Infrastructure;
 using DevSu.Bank.Customers.Domain.AggregateModels.ClientAggregate;
 using DevSu.Bank.Customers.Domain.Resources;
 using MediatR;
+using System.Linq.Expressions;
 
 namespace DevSu.Bank.Customers.Application.Commands.CreateClient
 {

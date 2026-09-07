@@ -1,7 +1,7 @@
 using DevSu.Bank.Customers.Application.DTOs;
 using DevSu.Bank.Customers.Application.ReadOnlyRepositories;
-using DevSu.Bank.Customers.Application.SeedWork;
 using DevSu.Bank.Customers.Application.ReadOnlyRepositories.Specifications;
+using DevSu.Bank.Customers.Application.SeedWork;
 using MediatR;
 
 namespace DevSu.Bank.Customers.Application.Queries.GetClients

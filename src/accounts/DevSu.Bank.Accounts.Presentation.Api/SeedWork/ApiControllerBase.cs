@@ -1,9 +1,8 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace DevSu.Bank.Accounts.Presentation.Api.SeedWork
 {
-    public class ApiControllerBase: ControllerBase
+    public class ApiControllerBase : ControllerBase
     {
         protected string? UserHostAddress
         {

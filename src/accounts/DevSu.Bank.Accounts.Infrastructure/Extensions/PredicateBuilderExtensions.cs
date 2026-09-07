@@ -1,6 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using DevSu.Bank.Accounts.Domain.SeedWork;
+using System.Linq.Expressions;
 using System.Reflection;
-using DevSu.Bank.Accounts.Domain.SeedWork;
 
 namespace DevSu.Bank.Accounts.Infrastructure.Extensions
 {

@@ -73,6 +73,7 @@ DevSu.Bank.Customers.Infrastructure          EF Core, repositorios, servicios ex
 DevSu.Bank.Customers.Presentation.Api        API REST, middleware, versionado
 
 + un proyecto *.UnitTest por cada capa
++ DevSu.Bank.Customers.Presentation.Api.IntegrationTest
 ```
 
 ## Endpoints
@@ -121,6 +122,27 @@ dotnet run --project DevSu.Bank.Customers.Presentation.Api
 
 Necesita una instancia de SQL Server accesible. La conexión se arma con cuatro variables
 de configuración: `Host`, `Database`, `User` y `Password`.
+
+## Pruebas de integración
+
+`DevSu.Bank.Customers.Presentation.Api.IntegrationTest` levanta la API completa con
+`WebApplicationFactory` y **un SQL Server real en Docker**, usando Testcontainers. El
+esquema se crea ejecutando el mismo `BaseDatos.sql` que se entrega, así que la prueba
+también valida ese script.
+
+Recorre el camino completo —HTTP, validaciones, MediatR, dominio, EF Core y base de
+datos— sin dobles: crear un cliente y leerlo, que la contraseña nunca se exponga, el
+rechazo por `clienteid` duplicado, los errores de validación, y que un cliente eliminado
+deje de aparecer.
+
+El contenedor se crea y se destruye solo. Solo hace falta que Docker esté corriendo:
+
+```bash
+dotnet test DevSu.Bank.Customers.Presentation.Api.IntegrationTest
+```
+
+El bus de mensajes se resuelve con transporte en memoria cuando no hay broker configurado,
+así que la prueba no necesita RabbitMQ.
 
 ## Notas técnicas
 

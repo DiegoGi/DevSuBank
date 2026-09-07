@@ -1,16 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using DevSu.Bank.Accounts.Application.ReadOnlyRepositories;
 using DevSu.Bank.Accounts.Domain.AggregateModels.AccountAggregate;
 using DevSu.Bank.Accounts.Domain.AggregateModels.ClientAggregate;
 using DevSu.Bank.Accounts.Infrastructure.AggregateDataContext;
-using DevSu.Bank.Accounts.Application.ReadOnlyRepositories;
 using DevSu.Bank.Accounts.Infrastructure.AggregateRepositories;
 using DevSu.Bank.Accounts.Infrastructure.Consumers;
-using DevSu.Bank.Accounts.Infrastructure.ReadOnlyRepositories;
-using DevSu.Bank.Accounts.Infrastructure.IntegrationEvents;
-using MassTransit;
 using DevSu.Bank.Accounts.Infrastructure.ReadOnlyDataContext;
+using DevSu.Bank.Accounts.Infrastructure.ReadOnlyRepositories;
+using MassTransit;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DevSu.Bank.Accounts.Infrastructure.Extensions
 {

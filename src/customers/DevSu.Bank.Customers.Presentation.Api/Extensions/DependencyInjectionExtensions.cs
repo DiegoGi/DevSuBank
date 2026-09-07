@@ -1,8 +1,5 @@
 ﻿using Asp.Versioning;
-using Microsoft.AspNetCore.OpenApi;
-using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.OpenApi;
-using DevSu.Bank.Customers.Presentation.Api.SeedWork;
 
 namespace DevSu.Bank.Customers.Presentation.Api.Extensions
 {
@@ -62,7 +59,7 @@ namespace DevSu.Bank.Customers.Presentation.Api.Extensions
                         Scheme = "bearer"
                     });
 
-                    document.Security = 
+                    document.Security =
                     [
                         new OpenApiSecurityRequirement
                         {

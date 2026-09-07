@@ -3,6 +3,35 @@
 Solución para la prueba técnica de Devsu: una arquitectura de microservicios para un
 sistema bancario simple (clientes, cuentas y movimientos).
 
+## Cómo levantarlo
+
+Requisito: Docker Desktop.
+
+```bash
+docker compose up -d --build
+```
+
+Eso levanta SQL Server y RabbitMQ, crea el esquema ejecutando `BaseDatos.sql` y arranca
+las dos APIs. No hay que ejecutar nada a mano. El script es idempotente, así que se puede
+volver a levantar cuantas veces se quiera sin perder datos ni provocar errores.
+
+| Servicio | URL |
+|---|---|
+| **API (gateway)** | **http://localhost:5000** |
+| Customers API (directo) | http://localhost:5001 |
+| Accounts API (directo) | http://localhost:5002 |
+| Health check | `/status` en el gateway y en cada API |
+| Swagger UI | `/swagger` en cada API |
+| SQL Server | `localhost:1433` |
+| RabbitMQ (panel) | http://localhost:15672 |
+
+Para bajar todo:
+
+```bash
+docker compose down          # conserva los datos
+docker compose down -v       # borra también la base de datos
+```
+
 ## Arquitectura
 
 Dos microservicios independientes, cada uno con su propia base de datos, que se comunican
@@ -110,35 +139,6 @@ habría que clonar dos veces y conectar las redes de Docker a mano.
 Los dos microservicios se comunican de forma **asincrónica** a través de un broker de
 mensajes. No se llaman entre sí por HTTP.
 
-## Cómo levantarlo
-
-Requisito: Docker Desktop.
-
-```bash
-docker compose up -d --build
-```
-
-Eso levanta SQL Server y RabbitMQ, crea el esquema ejecutando `BaseDatos.sql` y arranca
-las dos APIs. No hay que ejecutar nada a mano. El script es idempotente, así que se puede
-volver a levantar cuantas veces se quiera sin perder datos ni provocar errores.
-
-| Servicio | URL |
-|---|---|
-| **API (gateway)** | **http://localhost:5000** |
-| Customers API (directo) | http://localhost:5001 |
-| Accounts API (directo) | http://localhost:5002 |
-| Health check | `/status` en el gateway y en cada API |
-| Swagger UI | `/swagger` en cada API |
-| SQL Server | `localhost:1433` |
-| RabbitMQ (panel) | http://localhost:15672 |
-
-Para bajar todo:
-
-```bash
-docker compose down          # conserva los datos
-docker compose down -v       # borra también la base de datos
-```
-
 ## Conexión a la base de datos
 
 SQL Server queda expuesto en el puerto 1433 del host. Se puede conectar con SSMS,
@@ -192,6 +192,22 @@ consumiendo la API, cambiar un contrato sin versión rompe a todo el mundo a la 
 migran a su ritmo.
 
 La colección de Postman apunta a las rutas versionadas.
+
+## Pruebas
+
+```bash
+dotnet test src/customers/DevSu.Bank.Customers.sln
+dotnet test src/accounts/DevSu.Bank.Accounts.sln
+```
+
+**162 pruebas** en total: 156 unitarias y 6 de integración.
+
+Las de integración levantan la API de Clientes con `WebApplicationFactory` y un SQL Server
+real en Docker mediante Testcontainers, creando el esquema con el propio `BaseDatos.sql`.
+Requieren que Docker esté corriendo; el contenedor se crea y se destruye solo.
+
+Cada capa tiene además pruebas que validan las reglas de dependencia de la arquitectura con
+NetArchTest: si alguien hace que Domain referencie Infrastructure, el build falla.
 
 ## Colección de Postman
 

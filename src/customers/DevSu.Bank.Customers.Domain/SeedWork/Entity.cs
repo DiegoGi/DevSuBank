@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using MediatR;
+﻿using MediatR;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DevSu.Bank.Customers.Domain.SeedWork
 {

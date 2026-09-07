@@ -1,9 +1,6 @@
 ﻿
 using DevSu.Bank.Customers.Application.ReadOnlyModels;
-using DevSu.Bank.Customers.Infrastructure.ReadOnlyDataContext.Configurations;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 namespace DevSu.Bank.Customers.Infrastructure.ReadOnlyDataContext;
 
 public partial class ReadOnlyContext : DbContext
