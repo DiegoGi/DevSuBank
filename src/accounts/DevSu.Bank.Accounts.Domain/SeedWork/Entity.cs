@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using DevSu.Bank.Accounts.Domain.Resources;
+using System.ComponentModel.DataAnnotations.Schema;
 using MediatR;
 
 namespace DevSu.Bank.Accounts.Domain.SeedWork
@@ -25,6 +26,26 @@ namespace DevSu.Bank.Accounts.Domain.SeedWork
         public void ClearDomainEvents()
         {
             _domainEvents.Clear();
+        }
+
+        protected static string EnsureNotEmpty(string value, string parameterName)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new DomainValidationException(string.Format(Generals.NotEmptyOrNullParameter, parameterName));
+            }
+
+            return value.Trim();
+        }
+
+        protected static decimal EnsureNotNegative(decimal value, string parameterName)
+        {
+            if (value < 0)
+            {
+                throw new DomainValidationException(string.Format(Generals.GreaterOrEqualTo, parameterName, 0));
+            }
+
+            return value;
         }
     }
 }

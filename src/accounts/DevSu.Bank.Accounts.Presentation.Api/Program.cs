@@ -1,8 +1,11 @@
-using DevSu.Bank.Accounts.Application.Extensions;
+﻿using DevSu.Bank.Accounts.Application.Extensions;
 using DevSu.Bank.Accounts.Infrastructure.Extensions;
 using DevSu.Bank.Accounts.Presentation.Api.Extensions;
 using DevSu.Bank.Accounts.Presentation.Api.Middleware;
+using Microsoft.AspNetCore.Builder;
 using System.Diagnostics;
+
+string[] SupportedCultures = ["es", "en"];
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -27,6 +30,11 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/openapi/v1.json", "DevSu.Bank.Accounts.Presentation.Api v1");
     });
 }
+
+app.UseRequestLocalization(new RequestLocalizationOptions()
+    .SetDefaultCulture(SupportedCultures[0])
+    .AddSupportedCultures(SupportedCultures)
+    .AddSupportedUICultures(SupportedCultures));
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
