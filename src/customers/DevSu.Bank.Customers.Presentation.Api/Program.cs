@@ -2,7 +2,6 @@
 using DevSu.Bank.Customers.Infrastructure.Extensions;
 using DevSu.Bank.Customers.Presentation.Api.Extensions;
 using DevSu.Bank.Customers.Presentation.Api.Middleware;
-using Microsoft.AspNetCore.Builder;
 using System.Diagnostics;
 
 string[] SupportedCultures = ["es", "en"];

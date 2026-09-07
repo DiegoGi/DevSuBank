@@ -1,10 +1,10 @@
-﻿using System.Net;
-using DevSu.Bank.Accounts.Application.SeedWork;
+﻿using DevSu.Bank.Accounts.Application.SeedWork;
 using DevSu.Bank.Accounts.Domain.SeedWork;
 using DevSu.Bank.Accounts.Presentation.Api.Middleware;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System.Net;
 using Xunit;
 using Constants = DevSu.Bank.Accounts.Common.Constants;
 

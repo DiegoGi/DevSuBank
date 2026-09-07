@@ -2,6 +2,7 @@ using DevSu.Bank.Customers.Application.Commands.CreateClient;
 using DevSu.Bank.Customers.Application.SeedWork;
 using DevSu.Bank.Customers.Application.Services.Infrastructure;
 using DevSu.Bank.Customers.Domain.AggregateModels.ClientAggregate;
+using DevSu.Bank.Customers.Domain.Resources;
 using DevSu.Bank.Customers.Domain.SeedWork;
 using DevSu.Bank.Customers.Domain.ValueObjects;
 using Moq;
@@ -157,7 +158,7 @@ namespace DevSu.Bank.Customers.Application.UnitTest.Commands.CreateClient
                 () => CreateHandler().Handle(CreateCommand(), CancellationToken.None));
 
             //Assert
-            Assert.Contains(nameof(CreateClientCommand.ClientId), exception.Message);
+            Assert.Equal(Generals.ClientIdAlreadyRegistered, exception.Message);
         }
 
         [Fact]
@@ -171,7 +172,7 @@ namespace DevSu.Bank.Customers.Application.UnitTest.Commands.CreateClient
                 () => CreateHandler().Handle(CreateCommand(), CancellationToken.None));
 
             //Assert
-            Assert.Contains(nameof(CreateClientCommand.Identification), exception.Message);
+            Assert.Equal(Generals.IdentificationAlreadyRegistered, exception.Message);
         }
 
         [Fact]

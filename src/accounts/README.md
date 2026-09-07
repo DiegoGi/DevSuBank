@@ -76,6 +76,50 @@ DevSu.Bank.Accounts.Presentation.Api        API REST, middleware, versionado
 + un proyecto *.UnitTest por cada capa
 ```
 
+## Endpoints
+
+Se acceden por el gateway (`http://localhost:5000`) o directo contra el servicio
+(`http://localhost:5002`).
+
+| Verbo | Ruta | Qué hace |
+|---|---|---|
+| `POST` | `/cuentas` | Crea una cuenta. Valida que el cliente exista y esté activo |
+| `GET` | `/cuentas` | Lista cuentas con el nombre de su cliente. Acepta `busqueda`, `pagina`, `tamanoPagina`, `ordenarPor`, `orden` |
+| `GET` | `/cuentas/{id}` | Una cuenta |
+| `PUT` | `/cuentas/{id}` | Actualiza tipo y estado |
+| `POST` | `/movimientos` | Registra un movimiento. El valor va con signo: positivo deposita, negativo retira |
+| `GET` | `/movimientos` | Lista movimientos. Acepta `numeroCuenta`, `desde`, `hasta` y los de paginación |
+| `GET` | `/movimientos/{id}` | Un movimiento |
+| `GET` | `/reportes` | Estado de cuenta. Requiere `fechaInicial`, `fechaFinal` y `cliente` |
+
+Del movimiento solo se puede crear y consultar. **No hay actualización ni borrado**: un
+libro contable no se edita. Si un movimiento está mal, se registra otro que lo revierte.
+
+El movimiento se registra contra el **número de cuenta**, no contra el id interno, que es
+como funciona en banca y como lo plantea el enunciado.
+
+### Reglas que aplica
+
+- Un retiro que deje el saldo en negativo se rechaza con **`400 "Saldo no disponible"`**
+- Un movimiento de valor cero se rechaza
+- Una cuenta inactiva no acepta movimientos
+- El tipo de movimiento (depósito o retiro) se **deriva del signo del valor**, así es
+  imposible guardar un depósito con monto negativo
+- `InitialBalance` nunca cambia; solo se mueve `CurrentBalance`
+
+## Eventos que consume
+
+Este servicio mantiene una copia local de los clientes, alimentada por RabbitMQ:
+
+| Evento | Reacción |
+|---|---|
+| `devsu-bank:client-registered` | Inserta el cliente en la réplica |
+| `devsu-bank:client-updated` | Actualiza nombre y estado |
+| `devsu-bank:client-deleted` | Marca el cliente inactivo y **desactiva todas sus cuentas** |
+
+Gracias a esa réplica, el servicio sigue operando por completo aunque Clientes esté caído:
+crea cuentas, registra movimientos y genera reportes con el nombre del cliente.
+
 ## Cómo correrlo
 
 Lo normal es levantarlo con el resto del entorno desde la raíz del repositorio:
@@ -98,5 +142,6 @@ de configuración: `Host`, `Database`, `User` y `Password`.
 ## Notas técnicas
 
 - **.NET 10.** Todos los proyectos apuntan a `net10.0`.
-- **Sin `appsettings.json`.** Toda la configuración entra por variables de entorno, que
-  es lo que corresponde para un servicio que corre en contenedor.
+- **Sin `appsettings.json`.** Toda la configuración entra por variables de entorno, se usa secrec.json de acuerdo a buenas practicas de desarrollo local. Además de la base de
+  datos, necesita `MessageBrokerHost`, `MessageBrokerUser` y `MessageBrokerPassword`.
+- **Las fechas se guardan en UTC.** Los filtros por rango deben usar fechas UTC.

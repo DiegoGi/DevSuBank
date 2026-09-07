@@ -1,6 +1,6 @@
 ﻿using DevSu.Bank.Accounts.Domain.Resources;
-using System.ComponentModel.DataAnnotations.Schema;
 using MediatR;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DevSu.Bank.Accounts.Domain.SeedWork
 {

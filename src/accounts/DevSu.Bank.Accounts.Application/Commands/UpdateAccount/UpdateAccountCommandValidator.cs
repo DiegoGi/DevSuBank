@@ -8,10 +8,12 @@ namespace DevSu.Bank.Accounts.Application.Commands.UpdateAccount
         public UpdateAccountCommandValidator()
         {
             RuleFor(command => command.Id)
-                .GreaterThanOrEqualTo(1).WithMessage(string.Format(Generals.GreaterOrEqualTo, "{PropertyName}", "{ComparisonValue}"));
+                .GreaterThanOrEqualTo(1).WithMessage(string.Format(Generals.GreaterOrEqualTo, "{PropertyName}", "{ComparisonValue}"))
+                .WithName("id");
 
             RuleFor(command => command.AccountType)
-                .IsInEnum().WithMessage(string.Format(Generals.InvalidValueForParameter, "{PropertyName}"));
+                .IsInEnum().WithMessage(string.Format(Generals.InvalidValueForParameter, "{PropertyName}"))
+                .WithName("tipoCuenta");
         }
     }
 }

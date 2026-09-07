@@ -1,9 +1,9 @@
-﻿using System.Reflection;
-using DevSu.Bank.Accounts.Application.Behaviors;
+﻿using DevSu.Bank.Accounts.Application.Behaviors;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 namespace DevSu.Bank.Accounts.Application.Extensions
 {
     public static class DependencyInjectionExtensions
@@ -20,7 +20,7 @@ namespace DevSu.Bank.Accounts.Application.Extensions
 
         private static IServiceCollection AddMediatr(this IServiceCollection services)
         {
-           return services.AddMediatR(mediatrServiceConfiguration => mediatrServiceConfiguration.RegisterServicesFromAssembly(typeof(DependencyInjectionExtensions).Assembly));
+            return services.AddMediatR(mediatrServiceConfiguration => mediatrServiceConfiguration.RegisterServicesFromAssembly(typeof(DependencyInjectionExtensions).Assembly));
         }
 
         private static IServiceCollection AddValidators(this IServiceCollection services)

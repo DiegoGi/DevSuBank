@@ -1,13 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using DevSu.Bank.Accounts.Application.ReadOnlyRepositories;
 using DevSu.Bank.Accounts.Domain.AggregateModels.AccountAggregate;
 using DevSu.Bank.Accounts.Domain.AggregateModels.ClientAggregate;
 using DevSu.Bank.Accounts.Infrastructure.AggregateDataContext;
-using DevSu.Bank.Accounts.Application.ReadOnlyRepositories;
 using DevSu.Bank.Accounts.Infrastructure.AggregateRepositories;
-using DevSu.Bank.Accounts.Infrastructure.ReadOnlyRepositories;
+using DevSu.Bank.Accounts.Infrastructure.Consumers;
 using DevSu.Bank.Accounts.Infrastructure.ReadOnlyDataContext;
+using DevSu.Bank.Accounts.Infrastructure.ReadOnlyRepositories;
+using MassTransit;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DevSu.Bank.Accounts.Infrastructure.Extensions
 {
@@ -19,7 +21,8 @@ namespace DevSu.Bank.Accounts.Infrastructure.Extensions
                 .AddDatabaseContext(configuration)
                 .AddAggregateRepositories()
                 .AddReadOnlyRepositories()
-                .AddServices();
+                .AddServices()
+                .AddEventBus(configuration);
 
             return services;
         }
@@ -60,6 +63,38 @@ namespace DevSu.Bank.Accounts.Infrastructure.Extensions
 
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
+            return services;
+        }
+
+        private static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration)
+        {
+            var host = configuration.GetValue<string>("MessageBrokerHost");
+            var user = configuration.GetValue<string>("MessageBrokerUser");
+            var password = configuration.GetValue<string>("MessageBrokerPassword");
+
+            services.AddMassTransit(busConfigurator =>
+            {
+                busConfigurator.SetKebabCaseEndpointNameFormatter();
+
+                busConfigurator.AddConsumer<ClientRegisteredConsumer>();
+                busConfigurator.AddConsumer<ClientUpdatedConsumer>();
+                busConfigurator.AddConsumer<ClientDeletedConsumer>();
+
+                busConfigurator.UsingRabbitMq((context, busFactoryConfigurator) =>
+                {
+                    busFactoryConfigurator.Host(host, hostConfigurator =>
+                    {
+                        hostConfigurator.Username(user!);
+                        hostConfigurator.Password(password!);
+                    });
+
+                    busFactoryConfigurator.MessageTopology.SetEntityNameFormatter(
+                        new MessageUrnEntityNameFormatter());
+
+                    busFactoryConfigurator.ConfigureEndpoints(context);
+                });
+            });
+
             return services;
         }
     }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DevSu.Bank.Customers.Application.ReadOnlyModels;
+﻿namespace DevSu.Bank.Customers.Application.ReadOnlyModels;
 
 public partial class Client
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DevSu.Bank.Accounts.Application.ReadOnlyModels;
+﻿namespace DevSu.Bank.Accounts.Application.ReadOnlyModels;
 
 public partial class Transaction
 {

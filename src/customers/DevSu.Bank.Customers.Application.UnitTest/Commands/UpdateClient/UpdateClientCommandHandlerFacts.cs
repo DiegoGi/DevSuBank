@@ -4,7 +4,6 @@ using DevSu.Bank.Customers.Domain.AggregateModels.ClientAggregate;
 using DevSu.Bank.Customers.Domain.SeedWork;
 using DevSu.Bank.Customers.Domain.ValueObjects;
 using Moq;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;

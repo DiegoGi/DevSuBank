@@ -15,8 +15,7 @@ namespace DevSu.Bank.Accounts.Application.Commands.CreateAccount
         {
             if (await accountRepository.ExistsAsync(account => account.AccountNumber == request.AccountNumber))
             {
-                throw new ApplicationValidationException(
-                    string.Format(Generals.ValueAlreadyRegistered, nameof(request.AccountNumber)));
+                throw new ApplicationValidationException(Generals.AccountNumberAlreadyRegistered);
             }
 
             var client = await clientRepository.GetSingleByIdAsync(request.ClientId);

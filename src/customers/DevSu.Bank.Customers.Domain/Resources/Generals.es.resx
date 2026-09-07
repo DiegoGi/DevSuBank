@@ -133,15 +133,18 @@
     <value>No autorizado</value>
   </data>
   <data name="GreaterOrEqualTo" xml:space="preserve">
-    <value>El parámetro  '{0}' debe ser mayor o igual que '{1}'</value>
-  </data>
-  <data name="ValueAlreadyRegistered" xml:space="preserve">
-    <value>El valor de '{0}' ya está registrado</value>
+    <value>El parámetro '{0}' debe ser mayor o igual que '{1}'</value>
   </data>
   <data name="InvalidValueForParameter" xml:space="preserve">
     <value>El valor de '{0}' no es válido</value>
   </data>
   <data name="ClientNotFound" xml:space="preserve">
     <value>Cliente no encontrado</value>
+  </data>
+  <data name="ClientIdAlreadyRegistered" xml:space="preserve">
+    <value>Ya existe un cliente con ese clienteid</value>
+  </data>
+  <data name="IdentificationAlreadyRegistered" xml:space="preserve">
+    <value>Ya existe un cliente con esa identificacion</value>
   </data>
 </root>

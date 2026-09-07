@@ -8,7 +8,8 @@ namespace DevSu.Bank.Customers.Application.Commands.DeleteClient
         public DeleteClientCommandValidator()
         {
             RuleFor(command => command.Id)
-                .GreaterThan(0).WithMessage(string.Format(Generals.GreaterOrEqualTo, "{PropertyName}", "{ComparisonValue}"));
+                .GreaterThan(0).WithMessage(string.Format(Generals.GreaterOrEqualTo, "{PropertyName}", "{ComparisonValue}"))
+                .WithName("id");
         }
     }
 }

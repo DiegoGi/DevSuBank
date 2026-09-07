@@ -1,3 +1,4 @@
+using DevSu.Bank.Customers.Domain.AggregateModels.ClientAggregate.Events;
 using DevSu.Bank.Customers.Domain.SeedWork;
 using DevSu.Bank.Customers.Domain.ValueObjects;
 
@@ -23,6 +24,16 @@ namespace DevSu.Bank.Customers.Domain.AggregateModels.ClientAggregate
             ClientId = EnsureNotEmpty(clientId, nameof(ClientId));
             PasswordHash = EnsureNotEmpty(passwordHash, nameof(PasswordHash));
             Status = true;
+
+            AddDomainEvent(new ClientCreatedEvent(this));
+        }
+
+        public override void UpdatePersonalInformation(string name, Gender gender, int age, string? address,
+            string? phone)
+        {
+            base.UpdatePersonalInformation(name, gender, age, address, phone);
+
+            AddDomainEvent(new ClientUpdatedEvent(this));
         }
 
         public void ChangePassword(string passwordHash)
@@ -33,6 +44,8 @@ namespace DevSu.Bank.Customers.Domain.AggregateModels.ClientAggregate
         public void Delete()
         {
             Status = false;
+
+            AddDomainEvent(new ClientDeletedEvent(this));
         }
     }
 }
