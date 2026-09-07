@@ -75,6 +75,34 @@ DevSu.Bank.Customers.Presentation.Api        API REST, middleware, versionado
 + un proyecto *.UnitTest por cada capa
 ```
 
+## Endpoints
+
+Todos cuelgan de `/api/v1/clientes`. Se acceden por el gateway (`http://localhost:5000`)
+o directo contra el servicio (`http://localhost:5001`).
+
+| Verbo | Ruta | Qué hace |
+|---|---|---|
+| `POST` | `/clientes` | Crea un cliente. Devuelve `201` con su id |
+| `GET` | `/clientes` | Lista clientes, paginado. Acepta `busqueda`, `pagina`, `tamanoPagina`, `ordenarPor`, `orden` |
+| `GET` | `/clientes/{id}` | Un cliente. `404` si no existe o fue eliminado |
+| `PUT` | `/clientes/{id}` | Actualiza nombre, género, edad, dirección y teléfono |
+| `PATCH` | `/clientes/{id}/contrasena` | Cambia la contraseña |
+| `DELETE` | `/clientes/{id}` | Borrado lógico |
+
+## Eventos que publica
+
+Cuando un cliente cambia, el agregado registra un evento de dominio y su handler publica
+un evento de integración en RabbitMQ, para que el microservicio de Cuentas mantenga su
+copia local:
+
+| Operación | Evento |
+|---|---|
+| Crear | `devsu-bank:client-registered` |
+| Actualizar | `devsu-bank:client-updated` |
+| Eliminar | `devsu-bank:client-deleted` |
+
+El cambio de contraseña no publica nada: es un dato que a Cuentas no le sirve.
+
 ## Cómo correrlo
 
 Lo normal es levantarlo con el resto del entorno desde la raíz del repositorio:
@@ -97,5 +125,6 @@ de configuración: `Host`, `Database`, `User` y `Password`.
 ## Notas técnicas
 
 - **.NET 10.** Todos los proyectos apuntan a `net10.0`.
-- **Sin `appsettings.json`.** Toda la configuración entra por variables de entorno, que
-  es lo que corresponde para un servicio que corre en contenedor.
+- **Sin `appsettings.json`.** Toda la configuración entra por variables de entorno, se usa secrect.json de acuerdo a buenas practicas de desarrollo local. Además de la base de
+  datos, necesita `MessageBrokerHost`, `MessageBrokerUser` y `MessageBrokerPassword`.
+- **Contraseñas hasheadas** con PBKDF2. Nunca se guarda ni se devuelve la contraseña en texto plano.

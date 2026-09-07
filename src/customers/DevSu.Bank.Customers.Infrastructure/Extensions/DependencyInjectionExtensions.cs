@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using DevSu.Bank.Customers.Domain.AggregateModels.ClientAggregate;
 using DevSu.Bank.Customers.Infrastructure.AggregateDataContext;
 using DevSu.Bank.Customers.Application.ReadOnlyRepositories;
+using DevSu.Bank.Customers.Infrastructure.IntegrationEvents;
+using MassTransit;
 using DevSu.Bank.Customers.Application.Services.Infrastructure;
 using DevSu.Bank.Customers.Infrastructure.AggregateRepositories;
 using DevSu.Bank.Customers.Infrastructure.ReadOnlyRepositories;
@@ -20,7 +22,8 @@ namespace DevSu.Bank.Customers.Infrastructure.Extensions
                 .AddDatabaseContext(configuration)
                 .AddAggregateRepositories()
                 .AddReadOnlyRepositories()
-                .AddServices();
+                .AddServices()
+                .AddEventBus(configuration);
 
             return services;
         }
@@ -63,6 +66,35 @@ namespace DevSu.Bank.Customers.Infrastructure.Extensions
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddSingleton<IPasswordHasherService, PasswordHasherService>();
+            services.AddScoped<IEventBusService, EventBusService>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration)
+        {
+            var host = configuration.GetValue<string>("MessageBrokerHost");
+            var user = configuration.GetValue<string>("MessageBrokerUser");
+            var password = configuration.GetValue<string>("MessageBrokerPassword");
+
+            services.AddMassTransit(busConfigurator =>
+            {
+                busConfigurator.SetKebabCaseEndpointNameFormatter();
+
+                busConfigurator.UsingRabbitMq((context, busFactoryConfigurator) =>
+                {
+                    busFactoryConfigurator.Host(host, hostConfigurator =>
+                    {
+                        hostConfigurator.Username(user!);
+                        hostConfigurator.Password(password!);
+                    });
+
+                    busFactoryConfigurator.MessageTopology.SetEntityNameFormatter(
+                        new MessageUrnEntityNameFormatter());
+
+                    busFactoryConfigurator.ConfigureEndpoints(context);
+                });
+            });
 
             return services;
         }

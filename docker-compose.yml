@@ -17,6 +17,22 @@ services:
       retries: 12
       start_period: 30s
 
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: devsubank-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: "devsubank"
+      RABBITMQ_DEFAULT_PASS: "DevSu*Bank2026"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_running"]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
+
   db-init:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: devsubank-db-init
@@ -50,11 +66,16 @@ services:
       Database: "DevSuBankCustomers"
       User: "sa"
       Password: "DevSu*Bank2026"
+      MessageBrokerHost: "rabbitmq"
+      MessageBrokerUser: "devsubank"
+      MessageBrokerPassword: "DevSu*Bank2026"
     ports:
       - "5001:8080"
     depends_on:
       db-init:
         condition: service_completed_successfully
+      rabbitmq:
+        condition: service_healthy
 
   accounts-api:
     build:
@@ -68,11 +89,29 @@ services:
       Database: "DevSuBankAccounts"
       User: "sa"
       Password: "DevSu*Bank2026"
+      MessageBrokerHost: "rabbitmq"
+      MessageBrokerUser: "devsubank"
+      MessageBrokerPassword: "DevSu*Bank2026"
     ports:
       - "5002:8080"
     depends_on:
       db-init:
         condition: service_completed_successfully
+      rabbitmq:
+        condition: service_healthy
+
+  gateway:
+    image: nginx:alpine
+    container_name: devsubank-gateway
+    volumes:
+      - ./gateway/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "5000:8080"
+    depends_on:
+      customers-api:
+        condition: service_started
+      accounts-api:
+        condition: service_started
 
 volumes:
   sqlserver-data:

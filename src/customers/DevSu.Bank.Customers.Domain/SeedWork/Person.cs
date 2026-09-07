@@ -31,10 +31,16 @@ namespace DevSu.Bank.Customers.Domain.SeedWork
             string? phone)
         {
             Identification = EnsureNotEmpty(identification, nameof(Identification));
-            UpdatePersonalInformation(name, gender, age, address, phone);
+            SetPersonalInformation(name, gender, age, address, phone);
         }
 
-        public void UpdatePersonalInformation(string name, Gender gender, int age, string? address, string? phone)
+        public virtual void UpdatePersonalInformation(string name, Gender gender, int age, string? address,
+            string? phone)
+        {
+            SetPersonalInformation(name, gender, age, address, phone);
+        }
+
+        private void SetPersonalInformation(string name, Gender gender, int age, string? address, string? phone)
         {
             Name = EnsureNotEmpty(name, nameof(Name));
             Gender = gender;
