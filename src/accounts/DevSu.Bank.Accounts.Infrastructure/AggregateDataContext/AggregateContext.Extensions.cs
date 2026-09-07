@@ -16,6 +16,10 @@ namespace DevSu.Bank.Accounts.Infrastructure.AggregateDataContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new Configurations.AccountConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.TransactionConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.ClientConfiguration());
+
             OnModelCreatingPartial(modelBuilder);
         }
 

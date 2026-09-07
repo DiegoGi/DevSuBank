@@ -113,5 +113,77 @@ namespace DevSu.Bank.Accounts.Domain.Resources {
                 return ResourceManager.GetString("UnkownError", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a Saldo no disponible.
+        /// </summary>
+        public static string InsufficientBalance {
+            get {
+                return ResourceManager.GetString("InsufficientBalance", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a The value of '{0}' is not valid.
+        /// </summary>
+        public static string InvalidValueForParameter {
+            get {
+                return ResourceManager.GetString("InvalidValueForParameter", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a The value of '{0}' is already registered.
+        /// </summary>
+        public static string ValueAlreadyRegistered {
+            get {
+                return ResourceManager.GetString("ValueAlreadyRegistered", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a Account not found.
+        /// </summary>
+        public static string AccountNotFound {
+            get {
+                return ResourceManager.GetString("AccountNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a Client not found.
+        /// </summary>
+        public static string ClientNotFound {
+            get {
+                return ResourceManager.GetString("ClientNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a Transaction not found.
+        /// </summary>
+        public static string TransactionNotFound {
+            get {
+                return ResourceManager.GetString("TransactionNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a Savings.
+        /// </summary>
+        public static string AccountTypeSavings {
+            get {
+                return ResourceManager.GetString("AccountTypeSavings", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a Checking.
+        /// </summary>
+        public static string AccountTypeChecking {
+            get {
+                return ResourceManager.GetString("AccountTypeChecking", resourceCulture);
+            }
+        }
     }
 }
