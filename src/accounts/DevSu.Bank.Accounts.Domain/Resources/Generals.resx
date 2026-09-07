@@ -141,9 +141,6 @@
   <data name="InvalidValueForParameter" xml:space="preserve">
     <value>The value of '{0}' is not valid</value>
   </data>
-  <data name="ValueAlreadyRegistered" xml:space="preserve">
-    <value>The value of '{0}' is already registered</value>
-  </data>
   <data name="AccountNotFound" xml:space="preserve">
     <value>Account not found</value>
   </data>
@@ -158,5 +155,8 @@
   </data>
   <data name="AccountTypeChecking" xml:space="preserve">
     <value>Checking</value>
+  </data>
+  <data name="AccountNumberAlreadyRegistered" xml:space="preserve">
+    <value>There is already an account with that number</value>
   </data>
 </root>

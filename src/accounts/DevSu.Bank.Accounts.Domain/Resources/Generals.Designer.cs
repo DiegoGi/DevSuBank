@@ -177,12 +177,13 @@ namespace DevSu.Bank.Accounts.Domain.Resources {
             }
         }
         
+
         /// <summary>
-        ///   Busca una cadena traducida similar a The value of &apos;{0}&apos; is already registered.
+        ///   Busca una cadena traducida similar a There is already an account with that number.
         /// </summary>
-        public static string ValueAlreadyRegistered {
+        public static string AccountNumberAlreadyRegistered {
             get {
-                return ResourceManager.GetString("ValueAlreadyRegistered", resourceCulture);
+                return ResourceManager.GetString("AccountNumberAlreadyRegistered", resourceCulture);
             }
         }
     }

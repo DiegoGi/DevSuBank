@@ -347,7 +347,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test(\"Responde 400 Bad Request\", () => pm.response.to.have.status(400));",
-                  "pm.test(\"Indica el campo duplicado\", () => pm.expect(pm.response.json().Message).to.include(\"ClientId\"));"
+                  "pm.test(\"Indica que el cliente ya existe\", () => pm.expect(pm.response.json().Message).to.match(/ya existe|already/i));"
                 ]
               }
             }
@@ -776,7 +776,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test(\"Responde 400 Bad Request\", () => pm.response.to.have.status(400));",
-                  "pm.test(\"Indica el numero duplicado\", () => pm.expect(pm.response.json().Message).to.include(\"AccountNumber\"));"
+                  "pm.test(\"Indica que la cuenta ya existe\", () => pm.expect(pm.response.json().Message).to.match(/ya existe|already/i));"
                 ]
               }
             }

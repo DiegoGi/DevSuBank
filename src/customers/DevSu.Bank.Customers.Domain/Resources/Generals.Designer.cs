@@ -114,14 +114,6 @@ namespace DevSu.Bank.Customers.Domain.Resources {
             }
         }
 
-        /// <summary>
-        ///   Busca una cadena traducida similar a The value of '{0}' is already registered.
-        /// </summary>
-        public static string ValueAlreadyRegistered {
-            get {
-                return ResourceManager.GetString("ValueAlreadyRegistered", resourceCulture);
-            }
-        }
 
         /// <summary>
         ///   Busca una cadena traducida similar a The value of '{0}' is not valid.
@@ -138,6 +130,24 @@ namespace DevSu.Bank.Customers.Domain.Resources {
         public static string ClientNotFound {
             get {
                 return ResourceManager.GetString("ClientNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a There is already a client with that client id.
+        /// </summary>
+        public static string ClientIdAlreadyRegistered {
+            get {
+                return ResourceManager.GetString("ClientIdAlreadyRegistered", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a There is already a client with that identification.
+        /// </summary>
+        public static string IdentificationAlreadyRegistered {
+            get {
+                return ResourceManager.GetString("IdentificationAlreadyRegistered", resourceCulture);
             }
         }
     }

@@ -3,6 +3,18 @@
 Solución para la prueba técnica de Devsu: una arquitectura de microservicios para un
 sistema bancario simple (clientes, cuentas y movimientos).
 
+## Funcionalidades
+
+| | Requisito | Dónde | |
+|---|---|---|---|
+| **F1** | Endpoints `/clientes`, `/cuentas` y `/movimientos` | `Controllers/V1` de cada microservicio | ✅ |
+| **F2** | Registro de movimientos con actualización del saldo | `Account.RegisterTransaction` | ✅ |
+| **F3** | Mensaje "Saldo no disponible" | `InsufficientBalanceException` | ✅ |
+| **F4** | Reporte de estado de cuenta en JSON | `GET /api/v1/reportes` | ✅ |
+| **F5** | Prueba unitaria del dominio Cliente | `ClientFacts` — 156 pruebas unitarias en total | ✅ |
+| **F6** | Prueba de integración | `Presentation.Api.IntegrationTest` — 6 pruebas | ✅ |
+| **F7** | Despliegue en contenedores | `docker-compose.yml` | ✅ |
+
 ## Cómo levantarlo
 
 Requisito: Docker Desktop.

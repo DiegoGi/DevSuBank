@@ -2,6 +2,7 @@ using DevSu.Bank.Accounts.Application.Commands.CreateAccount;
 using DevSu.Bank.Accounts.Application.SeedWork;
 using DevSu.Bank.Accounts.Domain.AggregateModels.AccountAggregate;
 using DevSu.Bank.Accounts.Domain.AggregateModels.ClientAggregate;
+using DevSu.Bank.Accounts.Domain.Resources;
 using DevSu.Bank.Accounts.Domain.SeedWork;
 using DevSu.Bank.Accounts.Domain.ValueObjects;
 using Moq;
@@ -105,7 +106,7 @@ namespace DevSu.Bank.Accounts.Application.UnitTest.Commands.CreateAccount
                 () => CreateHandler().Handle(CreateCommand(), CancellationToken.None));
 
             //Assert
-            Assert.Contains(nameof(CreateAccountCommand.AccountNumber), exception.Message);
+            Assert.Equal(Generals.AccountNumberAlreadyRegistered, exception.Message);
         }
 
         [Fact]

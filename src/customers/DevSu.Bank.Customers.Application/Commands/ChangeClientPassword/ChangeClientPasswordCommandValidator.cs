@@ -8,11 +8,13 @@ namespace DevSu.Bank.Customers.Application.Commands.ChangeClientPassword
         public ChangeClientPasswordCommandValidator()
         {
             RuleFor(command => command.Id)
-                .GreaterThanOrEqualTo(1).WithMessage(string.Format(Generals.GreaterOrEqualTo, "{PropertyName}", "{ComparisonValue}"));
+                .GreaterThanOrEqualTo(1).WithMessage(string.Format(Generals.GreaterOrEqualTo, "{PropertyName}", "{ComparisonValue}"))
+                .WithName("id");
 
             RuleFor(command => command.Password)
                 .NotEmpty().WithMessage(string.Format(Generals.NotEmptyOrNullParameter, "{PropertyName}"))
-                .MinimumLength(4).WithMessage(string.Format(Generals.GreaterOrEqualTo, "{PropertyName}", "{MinLength}"));
+                .MinimumLength(4).WithMessage(string.Format(Generals.GreaterOrEqualTo, "{PropertyName}", "{MinLength}"))
+                .WithName("contrasena");
         }
     }
 }

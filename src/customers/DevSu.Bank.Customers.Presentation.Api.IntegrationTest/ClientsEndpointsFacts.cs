@@ -60,6 +60,7 @@ namespace DevSu.Bank.Customers.Presentation.Api.IntegrationTest
         {
             //Arrange
             var client = factory.CreateClient();
+            client.DefaultRequestHeaders.Add("Accept-Language", "es");
             var request = CreateRequest("CLI-INT-03", "0102030413");
             await client.PostAsJsonAsync(Endpoint, request);
 
@@ -69,7 +70,7 @@ namespace DevSu.Bank.Customers.Presentation.Api.IntegrationTest
 
             //Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.Contains("ClientId", error!.Message);
+            Assert.Equal("Ya existe un cliente con ese clienteid", error!.Message);
         }
 
         [Fact]
